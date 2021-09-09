@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -10,7 +11,7 @@ export class SignupComponent implements OnInit {
 
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.initForm()
@@ -25,7 +26,11 @@ export class SignupComponent implements OnInit {
   }
 
   submitForm(){
-
+    this.http.post('http://localhost:8000/api/register', this.signupForm.value)
+      .subscribe(res=>{
+        console.log(res);
+      })
+    ;
   }
 
 }
